@@ -49,8 +49,8 @@
             steps {  
                 
                 
-                sh 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'
-                sh 'az account set -s $AZURE_SUBSCRIPTION_ID'
+                sh 'az login --service-principal -u f376fa70-b546-4055-9f41-01f88328ac58 -p OaFapvY0R3SM~610ZrO_rofUxtXnwjU7eU -t d048add3-ed4d-4009-87b7-65d931ca19fc'
+                sh 'az account set -s 7be9aa2e-26d1-4011-a86e-0308a6962022'
                 sh '''
                 terraform init -input=false -backend-config="resource_group_name=$TF_STATE_RG" -backend-config="storage_account_name=$TF_STATE_STORAGE" -backend-config="container_name=$TF_STATE_CONTAINER" -backend-config="key=$TF_SERVICE.$TF_ENV.terraform.tfstate"
                 '''
