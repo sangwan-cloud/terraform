@@ -1,5 +1,11 @@
-pipeline {
-    agent terraform
+ agent {
+        label 'terraform'
+    }
+
+    environment {
+        TF_VERSION = '0.15.1'
+    }
+
 
     stages {
         stage ("Checkout code") {
