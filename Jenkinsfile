@@ -6,6 +6,15 @@
 
     environment {
         TF_VERSION = '0.15.1'
+        TF_STATE_RG = 'rg-terra'
+        TF_STATE_STORAGE = 'tfstate'
+        TF_STATE_CONTAINER = 'storageterraformbackend'
+        TF_SERVICE = 'devops'
+        TF_ENV = 'jenkins'
+        ARM_CLIENT_ID = credentials('ARM_CLIENT_ID')
+        ARM_SUBSCRIPTION_ID = credentials('ARM_SUBSCRIPTION_ID')
+        ARM_CLIENT_SECRET = credentials('ARM_CLIENT_SECRET')
+        ARM_TENANT_ID = credentials('ARM_TENANT_ID')
     }
 
 
@@ -33,6 +42,20 @@
                 rm terraform.zip
                 curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
                 '''
+            }
+        }
+
+        stage('Terraform Init & Plan'){
+            steps {  
+                
+                
+                sh 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'
+                sh 'az account set -s $AZURE_SUBSCRIPTION_ID'
+                sh '''
+                terraform init -input=false -backend-config="resource_group_name=$TF_STATE_RG" -backend-config="storage_account_name=$TF_STATE_STORAGE" -backend-config="container_name=$TF_STATE_CONTAINER" -backend-config="key=$TF_SERVICE.$TF_ENV.terraform.tfstate"
+                '''
+                sh 'terraform plan'
+                
             }
         }
 
