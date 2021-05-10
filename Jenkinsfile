@@ -1,4 +1,6 @@
- agent {
+ 
+ pipeline {
+    agent {
         label 'terraform'
     }
 
@@ -35,4 +37,5 @@
         }
 
         
-    }
+    } 
+}
