@@ -9,12 +9,22 @@ terraform {
 }
 
 #configure azurerm provider
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "=2.58.0"
+    }
+  }
+}
+
+# Configure the Microsoft Azure Provider
 provider "azurerm" {
-  version = "2.46.0"
+  features {}
 }
 
 #create resource group
 resource "azurerm_resource_group" "rg" {
     name     = "jenkins-terraform"
-    location = "westus2"
+    location = "uksouth"
 }
