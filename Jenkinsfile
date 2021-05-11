@@ -32,7 +32,7 @@
             }
         }
 
-        /* stage ("Install dependencies") {
+        stage ("Install dependencies") {
             steps {
                 sh '''
                 curl -SL "https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip" --output terraform.zip
@@ -46,19 +46,27 @@
             }
         }
 
-        stage('Terraform Init & Plan'){
-            steps {  
-                
-                
-                sh 'az login --service-principal -u f376fa70-b546-4055-9f41-01f88328ac58 -p OaFapvY0R3SM~610ZrO_rofUxtXnwjU7eU -t d048add3-ed4d-4009-87b7-65d931ca19fc'
-                sh 'az account set -s 7be9aa2e-26d1-4011-a86e-0308a6962022'
-                sh '''
-                terraform init -input=false
-                '''
-                sh 'terraform plan'
-                
-            }
-        } */
+        stage('Terraform Init'){
+            
+            steps {
+                    ansiColor('xterm') {
+                    withCredentials([azureServicePrincipal(
+                    credentialsId: 'azdo-terraform-service-principal',
+                    subscriptionIdVariable: 'ARM_SUBSCRIPTION_ID',
+                    clientIdVariable: 'ARM_CLIENT_ID',
+                    clientSecretVariable: 'ARM_CLIENT_SECRET',
+                    tenantIdVariable: 'ARM_TENANT_ID'
+                ), string(credentialsId: 'access_key', variable: 'ARM_ACCESS_KEY')]) {
+                        
+                        sh """
+                                
+                        echo "Initialising Terraform"
+                        terraform init -backend-config="access_key=$ARM_ACCESS_KEY"
+                        """
+                           }
+                    }
+             }
+        }
 
         
     } 
