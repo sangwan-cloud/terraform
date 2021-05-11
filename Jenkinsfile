@@ -15,6 +15,7 @@
         ARM_SUBSCRIPTION_ID = credentials('ARM_SUBSCRIPTION_ID')
         ARM_CLIENT_SECRET = credentials('ARM_CLIENT_SECRET')
         ARM_TENANT_ID = credentials('ARM_TENANT_ID')
+        ARM_ACCESS_KEY = credentials('ARM_ACCESS_KEY')
     }
 
 
@@ -52,7 +53,7 @@
                 sh 'az login --service-principal -u f376fa70-b546-4055-9f41-01f88328ac58 -p OaFapvY0R3SM~610ZrO_rofUxtXnwjU7eU -t d048add3-ed4d-4009-87b7-65d931ca19fc'
                 sh 'az account set -s 7be9aa2e-26d1-4011-a86e-0308a6962022'
                 sh '''
-                terraform init -input=false
+                terraform init -input=false -backend-config="access_key=$ARM_ACCESS_KEY"
                 '''
                 sh 'terraform plan'
                 
