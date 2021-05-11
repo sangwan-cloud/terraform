@@ -11,10 +11,10 @@
         TF_STATE_CONTAINER = 'storageterraformbackend'
         TF_SERVICE = 'devops'
         TF_ENV = 'jenkins'
-        ARM_CLIENT_ID = credentials('ARM_CLIENT_ID')
-        ARM_SUBSCRIPTION_ID = credentials('ARM_SUBSCRIPTION_ID')
-        ARM_CLIENT_SECRET = credentials('ARM_CLIENT_SECRET')
-        ARM_TENANT_ID = credentials('ARM_TENANT_ID')
+        ARM_CLIENT_ID = credentials('terraform-client-id')
+        ARM_SUBSCRIPTION_ID = credentials('terraform-subscription-id')
+        ARM_CLIENT_SECRET = credentials('terraform-secret-id')
+        ARM_TENANT_ID = credentials('terraform-tenent-id')
 
     }
 
@@ -32,7 +32,13 @@
             }
         }
 
-        stage ("Install dependencies") {
+        stage('keyvault-test') {
+            steps {
+                echo '$ARM_SUBSCRIPTION_ID'
+            }
+        }
+
+        /* stage ("Install dependencies") {
             steps {
                 sh '''
                 curl -SL "https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip" --output terraform.zip
@@ -58,7 +64,7 @@
                 sh 'terraform plan'
                 
             }
-        }
+        } */
 
         
     } 
