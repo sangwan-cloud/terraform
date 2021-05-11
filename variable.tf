@@ -1,8 +1,8 @@
-variable env {
+variable "env" {
   type    = string
   default = "staging"
 }
-variable location-name {
+variable "location-name" {
   type    = string
   default = "uksouth"
 }
