@@ -70,7 +70,7 @@ pipeline{
                         sh """
                         
                         echo "Creating Terraform Plan"
-                        terraform plan -var "client_id=$ARM_CLIENT_ID" -var "client_secret=$ARM_CLIENT_SECRET" -var "subscription_id=$ARM_SUBSCRIPTION_ID" -var "tenant_id=$ARM_TENANT_ID"
+                        terraform plan
                         """
                         }
                 }
@@ -100,7 +100,7 @@ pipeline{
 
                         sh """
                         echo "Applying the plan"
-                        terraform apply -auto-approve -var "client_id=$ARM_CLIENT_ID" -var "client_secret=$ARM_CLIENT_SECRET" -var "subscription_id=$ARM_SUBSCRIPTION_ID" -var "tenant_id=$ARM_TENANT_ID"
+                        terraform apply -auto-approve
                         """
                                 }
                 }
