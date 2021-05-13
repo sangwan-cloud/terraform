@@ -1,7 +1,7 @@
  
  pipeline {
     agent {
-        label 'terraform'
+        label 'devops'
     }
 
     environment {
